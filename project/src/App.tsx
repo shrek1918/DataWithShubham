@@ -91,7 +91,7 @@ function App() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-full blur-3xl opacity-20 animate-pulse"></div>
                 <img
-                  src="/resources/new_dp.jpg"
+                  src="new_dp.jpg"
                   alt="Shubham Kumar"
                   className="w-64 h-64 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-xl relative z-10"
                 />
