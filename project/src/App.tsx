@@ -78,7 +78,7 @@ function App() {
                   TensorFlow, and scikit-learn, with a particular interest in computer vision and natural language processing.
                 </p>
                 <a
-                  href="/resources/SHUBHAM_KUMAR_DA1.pdf"
+                  href="/SHUBHAM_KUMAR_DA1.pdf"
                   download
                   className="inline-flex items-center px-4 py-2 mt-4 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
                 >
