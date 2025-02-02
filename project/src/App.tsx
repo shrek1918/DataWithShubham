@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Linkedin, Github, Mail, ExternalLink, Moon, Sun, Download } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import CodingPlatforms from './components/CodingPlatforms';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import FeaturedProjects from './components/FeaturedProjects';
+import Backend from './components/Projects/Backend';
+import Python from './components/Projects/Python';
+import Frontend from './components/Projects/Frontend';
+import OOP from './components/Projects/OOP';
+import SQL from './components/Projects/SQL';
+import MachineLearning from './components/Projects/MachineLearning';
+import FullStack from './components/Projects/FullStack';
+import AI from './components/Projects/AI';
 
+function NavigationAwareApp() {
+  const [darkMode, setDarkMode] = useState(true);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
-function App() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   useEffect(() => {
     if (darkMode) {
@@ -16,40 +31,8 @@ function App() {
     }
   }, [darkMode]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ name, email, message });
-    setName('');
-    setEmail('');
-    setMessage('');
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-              DataWithShubham.com
-            </div>
-            <div className="flex items-center space-x-8">
-              <nav className="hidden md:flex space-x-8">
-                <a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">About</a>
-                <a href="#platforms" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Platforms</a>
-                <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
-              </nav>
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
-              >
-                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+  const MainContent = () => (
+    <>
       {/* Hero Section */}
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +61,7 @@ function App() {
                   TensorFlow, and scikit-learn, with a particular interest in computer vision and natural language processing.
                 </p>
                 <a
-                  href="/SHUBHAM_KUMAR_DA1.pdf"
+                  href="/SHUBHAM_KUMAR_DS.pdf"
                   download
                   className="inline-flex items-center px-4 py-2 mt-4 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
                 >
@@ -133,9 +116,8 @@ function App() {
       <section id="platforms" className="py-20 bg-gray-100 dark:bg-gray-800 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Coding Platforms Card */}
-            <a
-              href="/platforms"
+            <Link
+              to="/platforms"
               className="group relative bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-200"
               style={{
                 backgroundImage: 'url("https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1600&q=80")',
@@ -155,11 +137,10 @@ function App() {
                   <ExternalLink className="ml-2 h-5 w-5" />
                 </div>
               </div>
-            </a>
+            </Link>
 
-            {/* Featured Projects Card */}
-            <a
-              href="/projects"
+            <Link
+              to="/projects"
               className="group relative bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-200"
               style={{
                 backgroundImage: 'url("https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1600&q=80")',
@@ -179,66 +160,57 @@ function App() {
                   <ExternalLink className="ml-2 h-5 w-5" />
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 dark:bg-gray-900 transition-colors duration-200">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12 dark:text-white">Get in Touch</h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={4}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                required
-              ></textarea>
-            </div>
-            <div>
+      <Contact />
+    </>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+              DataWithShubham.com
+            </Link>
+            <div className="flex items-center space-x-8">
+              {isHomePage && (
+                <nav className="hidden md:flex space-x-8">
+                  <a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                  <a href="#platforms" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Platforms</a>
+                  <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
+                </nav>
+              )}
               <button
-                type="submit"
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
               >
-                Send Message
+                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </section>
+      </header>
+
+      <Routes>
+        <Route path="/" element={<MainContent />} />
+        <Route path="/platforms" element={<CodingPlatforms />} />
+        <Route path="/projects" element={<FeaturedProjects />} />
+        <Route path="/projects/backend" element={<Backend />} />
+        <Route path="/projects/python" element={<Python />} />
+        <Route path="/projects/frontend" element={<Frontend />} />
+        <Route path="/projects/oop" element={<OOP />} />
+        <Route path="/projects/sql" element={<SQL />} />
+        <Route path="/projects/machine-learning" element={<MachineLearning />} />
+        <Route path="/projects/full-stack" element={<FullStack />} />
+        <Route path="/projects/ai" element={<AI />} />
+      </Routes>
 
       {/* Footer */}
       <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 transition-colors duration-200">
@@ -249,6 +221,14 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <NavigationAwareApp />
+    </Router>
   );
 }
 
